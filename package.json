@@ -2,7 +2,8 @@
   "name": "caesar-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "caesar-cli/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Anntol/nodejs2021Q2/issues"
   },
-  "homepage": "https://github.com/Anntol/nodejs2021Q2#readme"
+  "homepage": "https://github.com/Anntol/nodejs2021Q2#readme",
+  "dependencies": {
+    "commander": "^7.2.0"
+  }
 }
