@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { accessSync } from 'fs';
 
 export function areOptionsValid(action, shift) {  
@@ -27,6 +28,9 @@ export function areOptionsValid(action, shift) {
 export function isFileAccessible(filePath) {
   if (filePath) {
     try {
+      if (!path.isAbsolute(filePath)) {
+        filePath = path.resolve(filePath);
+      }
       accessSync(filePath);
     } 
     catch (error) {
