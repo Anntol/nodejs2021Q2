@@ -3,6 +3,7 @@ import { Command } from 'commander/esm.mjs';
 import { pipeline } from 'stream';
 
 import TransformerStream from './transformerStream.js';
+import { areOptionsValid, isFileAccessible } from './validation.js'
 
 const program = new Command();
 program
@@ -13,8 +14,9 @@ program
   .parse(process.argv);
 
 const { action, shift, input, output } = program.opts();
-if (!areOptionsValid(action, shift)){  
-  process.exit(1);
+if (!areOptionsValid(action, shift) ||
+  (!isFileAccessible(input)) || (!isFileAccessible(output))) {
+    process.exit(1);
 }
 
 pipeline(
@@ -28,27 +30,3 @@ pipeline(
     }
   }
 )
-
-function areOptionsValid(action, shift) {  
-  if (action === undefined) {
-    console.error('"action" is a required option');
-    return false;
-  }
-  
-  if (action !== 'encode' && action !== 'decode') {
-    console.error('"action" must be "encode" or "decode"');
-    return false;
-  }
-
-  if (shift === undefined) {
-    console.error('"shift" is a required option');
-    return false;
-  }
-
-  if (!Number.isInteger(+shift)) {
-    console.error('"shift" must be an integer number');
-    return false;
-  }
-
-  return true;
-}
