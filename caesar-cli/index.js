@@ -1,5 +1,7 @@
+import * as fs from 'fs';
 import { Command } from 'commander/esm.mjs';
 import { pipeline } from 'stream';
+
 import TransformerStream from './transformerStream.js';
 
 const program = new Command();
@@ -29,7 +31,7 @@ pipeline(
 
 function areOptionsValid(action, shift) {  
   if (action === undefined) {
-    console.error('"action" is required option');
+    console.error('"action" is a required option');
     return false;
   }
   
@@ -39,7 +41,7 @@ function areOptionsValid(action, shift) {
   }
 
   if (shift === undefined) {
-    console.error('"shift" is required option');
+    console.error('"shift" is a required option');
     return false;
   }
 

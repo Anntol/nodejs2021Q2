@@ -1,5 +1,5 @@
 import { Transform } from 'stream';
-import { encode, decode } from './caesar.js';
+import { shiftMessage } from './caesar.js';
 
 class TransformerStream extends Transform {
   constructor(action, shift) {
@@ -10,11 +10,8 @@ class TransformerStream extends Transform {
 
   _transform(chunk, encoding, callback) {
     const source = chunk.toString();
-    const destination = (this.action === 'encode' && this.shift > 0 || 
-      this.action === 'decode' && this.shift < 0) ?
-      encode(source, Math.abs(this.shift)) : 
-      decode(source, Math.abs(this.shift));
-    this.push(destination);
+    const shiftedMessage = shiftMessage(source, (this.action === 'encode') ? this.shift : -this.shift);
+    this.push(shiftedMessage);
     callback();
   }
 }
